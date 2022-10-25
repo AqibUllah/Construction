@@ -69,6 +69,23 @@
                       <a title="Linkdin" href="https://github.com/themefisher.com">
                           <span class="social-icon"><i class="fab fa-github"></i></span>
                       </a>
+                      @guest
+                      <a title="Login" href="/login">
+                          <span class="social-icon"><i class="fas fa-lock"></i></span>
+                      </a>
+                      @endguest
+                      @auth
+                      <a title="Admin Logged In" href="#">
+                          <span class="social-icon"><i class="fas fa-user"></i> {{ auth()->user()->name }}</span>
+                      </a>
+                      
+                      <form action="logout" method="post" class="d-inline">
+                        @csrf
+                          <button class="outline-none bg-transparent border-0" type="submit">
+                            <span class="social-icon"><i class="fa fa-sign-out"></i> Log Out</span>
+                          </button>
+                        </form>
+                      @endauth
                     </li>
                 </ul>
               </div>
