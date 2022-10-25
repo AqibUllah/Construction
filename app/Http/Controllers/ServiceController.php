@@ -4,9 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Service;
 use Illuminate\Http\Request;
+use App\Repositories\Interfaces\IServices;
 
 class ServiceController extends Controller
 {
+    protected IServices $service;
+
+    public function __construct(IServices $service)
+    {
+        $this->service = $service;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +21,8 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        return view('services.index');
+        $services = $this->service->getAllServices();
+        return view('services.index',compact('services'));
     }
 
     /**
@@ -46,7 +54,7 @@ class ServiceController extends Controller
      */
     public function show(Service $service)
     {
-        //
+        return view('services.detail',compact('service'));
     }
 
     /**
