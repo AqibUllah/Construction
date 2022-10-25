@@ -94,7 +94,7 @@
                           </ul>
                       </li> -->
                       <li class="nav-item"><a class="nav-link" href="#">Projects</a></li>
-                      <li class="nav-item"><a class="nav-link" href="#">Services</a></li>
+                      <li class="nav-item"><a class="nav-link" href="{{ route('service.index') }}">Services</a></li>
               
                       <!-- <li class="nav-item dropdown">
                           <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Features <i class="fa fa-angle-down"></i></a>
