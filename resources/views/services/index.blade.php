@@ -21,7 +21,7 @@
               <div class="ts-service-info">
                   <h3 class="service-box-title"><a href="service-single.html">Zero Harm Everyday</a></h3>
                   <p>You have ideas, goals, and dreams. We have a culturally diverse, forward thinking team looking for talent like. Lorem ipsum dolor suscipit.</p>
-                  <a class="learn-more d-inline-block" href="service-single.html" aria-label="service-details"><i class="fa fa-caret-right"></i> Learn more</a>
+                  <a class="learn-more d-inline-block" href="{{ route('service.show', 1) }}" aria-label="service-details"><i class="fa fa-caret-right"></i> Learn more</a>
               </div>
             </div>
         </div><!-- Service1 end -->
