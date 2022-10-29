@@ -5,7 +5,7 @@
       <div class="logo-area">
           <div class="row align-items-center">
             <div class="logo col-lg-3 text-center text-lg-left mb-3 mb-md-5 mb-lg-0">
-                <a class="d-block" href="index.html">
+                <a class="d-block" href="/">
                   <img loading="lazy" src="/assets/images/logo.png" alt="Constra">
                 </a>
             </div><!-- logo end -->
@@ -74,6 +74,7 @@
                             <li><a href="team.html">Our People</a></li>
                             <li><a href="testimonials.html">Testimonials</a></li>
                             <li><a href="faq.html">Faq</a></li>
+                            <li><a href="vendors">Vendors</a></li>
                             <li><a href="pricing.html">Pricing</a></li>
                           </ul>
                       </li>
@@ -123,6 +124,7 @@
               
                       <li class="nav-item"><a class="nav-link" href="#">News</a></li>
                       <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
+                      <li class="nav-item"><a class="nav-link" href="{{ route('vendors.create') }}">Join as a Vendor</a></li>
                     </ul>
                 </div>
               </nav>

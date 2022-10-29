@@ -74,10 +74,16 @@
                       <a title="Login" href="/login">
                           <span class="social-icon"><i class="fas fa-lock"></i></span>
                       </a>
+                      <a title="Login" href="/register">
+                          <span class="social-icon">
+                            <i class="fas fa-signup"></i>
+                            Sign Up
+                          </span>
+                      </a>
                       @endguest
 
                       @auth
-                      <a title="Admin Logged In" href="/dashboard">
+                      <a title="Admin Logged In" href="{{ \Auth::user()->hasRole('admin') ? '/admin/dashboard' : '/dashboard' }}">
                           <span class="social-icon"><i class="fas fa-user"></i> {{ auth()->user()->name }}</span>
                       </a>                      
                       <form action="logout" method="post" class="d-inline">

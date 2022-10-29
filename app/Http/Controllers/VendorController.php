@@ -14,7 +14,7 @@ class VendorController extends Controller
      */
     public function index()
     {
-        //
+        return view('vendor.VendorDashboard');
     }
 
     /**
@@ -24,7 +24,7 @@ class VendorController extends Controller
      */
     public function create()
     {
-        //
+        return view('VendorCreate');
     }
 
     /**

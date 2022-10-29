@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\VendorController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -27,12 +28,20 @@ Route::get('/contact', function () {
 Auth::routes();
 
 Route::resource('service',ServiceController::class);
+Route::resource('vendors',VendorController::class);
 
 Route::group(['middleware' => ['role:admin']], function () {
     Route::prefix('admin')->group(function() { 
         Route::controller(AdminController::class)->group(function() {
             Route::get('/dashboard','index')->name('home');
         });
+    });
+});
+
+
+Route::group(['middleware' => ['role:vendor']], function () {
+    Route::controller(VendorController::class)->group(function() {
+        Route::get('/dashboard','index')->name('vendor_home');
     });
 });
 

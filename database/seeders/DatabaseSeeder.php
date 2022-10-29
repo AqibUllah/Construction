@@ -24,10 +24,19 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('admin@123'),
             'email_verified_at' => now(),
         ]);
+        
+        $ali = \App\Models\User::factory()->create([
+            'name' => 'Ali',
+            'email' => 'ali@example.com',
+            'password' => bcrypt('ali@123'),
+            'email_verified_at' => now(),
+        ]);
 
         $adminRole = Role::create(['name' => 'admin']);
+        $vendorRole = Role::create(['name' => 'vendor']);
         // $permission = Permission::create(['name' => 'edit articles']);
         $admin->assignRole($adminRole);
+        $ali->assignRole($vendorRole);
 
     }
 }
