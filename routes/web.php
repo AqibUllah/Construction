@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\AdminController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +26,13 @@ Route::get('/contact', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 Route::resource('service',ServiceController::class);
+
+Route::group(['middleware' => ['role:admin']], function () {
+    Route::prefix('admin')->group(function() { 
+        Route::controller(AdminController::class)->group(function() {
+            Route::get('/dashboard','index')->name('home');
+        });
+    });
+});
+
