@@ -39,6 +39,7 @@
     <link rel="stylesheet" href="/assets/plugins/colorbox/colorbox.css">
     <!-- Template styles-->
     <link rel="stylesheet" href="/assets/css/style.css">
+    @yield('styles')
 </head>
 <body>
   <div class="body-inner">
@@ -74,11 +75,11 @@
                           <span class="social-icon"><i class="fas fa-lock"></i></span>
                       </a>
                       @endguest
+
                       @auth
-                      <a title="Admin Logged In" href="#">
+                      <a title="Admin Logged In" href="/dashboard">
                           <span class="social-icon"><i class="fas fa-user"></i> {{ auth()->user()->name }}</span>
-                      </a>
-                      
+                      </a>                      
                       <form action="logout" method="post" class="d-inline">
                         @csrf
                           <button class="outline-none bg-transparent border-0" type="submit">
@@ -127,6 +128,13 @@
 
   <!-- Template custom -->
   <script src="/assets/js/script.js"></script>
+
+  <script>
+    function logout()
+    {
+      document.getElementById("logout-form").submit();
+    }
+  </script>
   
   </div><!-- Body inner end -->
 
