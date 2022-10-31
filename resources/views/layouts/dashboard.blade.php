@@ -58,9 +58,12 @@
                   <h3 class="widget-title">Admin Panel</h3>
                   <ul class="nav service-menu">
                     <li class="active"><a href="service-single.html">Dashboard</a></li>
-                    <li><a href="service-single.html">Vendors</a></li>
                     <li><a href="#">Services</a></li>
-                    <li><a href="#">Clients</a></li>
+                    @if(\Auth::user()->hasRole('admin'))
+                      <li><a href="#">Clients</a></li>
+                    @else
+
+                    @endif
                     <li><a href="#">Settings</a></li>
                     <li>
                       <form id="logout-form" action="/logout" method="post">
