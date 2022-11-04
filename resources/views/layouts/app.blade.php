@@ -54,7 +54,7 @@
                 </ul>
               </div>
               <!--/ Top info end -->
-  
+
               <div class="col-lg-4 col-md-4 top-social text-center text-md-right">
                 <ul class="list-unstyled">
                     <li>
@@ -83,9 +83,9 @@
                       @endguest
 
                       @auth
-                      <a title="Admin Logged In" href="{{ \Auth::user()->hasRole('admin') ? '/admin/dashboard' : '/dashboard' }}">
+                      <a title="Admin Logged In" href="{{ \Auth::user()->hasRole('admin') ? '/admin/dashboard' : '/vendor/dashboard' }}">
                           <span class="social-icon"><i class="fas fa-user"></i> {{ auth()->user()->name }}</span>
-                      </a>                      
+                      </a>
                       <form action="logout" method="post" class="d-inline">
                         @csrf
                           <button class="outline-none bg-transparent border-0" type="submit">
@@ -103,12 +103,12 @@
         <!--/ Container end -->
     </div>
     <!--/ Topbar end -->
-    
+
     <!-- topbar & navbar -->
     <x-header />
 
 
-    <main>       
+    <main>
       @yield('content')
     </main>
 
@@ -141,7 +141,7 @@
       document.getElementById("logout-form").submit();
     }
   </script>
-  
+
   </div><!-- Body inner end -->
 
 </body>

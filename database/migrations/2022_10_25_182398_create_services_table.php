@@ -16,11 +16,14 @@ return new class extends Migration
         Schema::create('services', function (Blueprint $table) {
             // $table->index('vendor_id');
             $table->id();
-            $table->unsignedBigInteger('vendor_id');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->text('title');
             $table->longText('description');
+            $table->string('category');
+            $table->string('price');
+            $table->boolean('IsAvailable');
             $table->boolean('IsDeleted');
-            $table->foreign('vendor_id')->references('id')->on('vendors')->onDelete('cascade');
             $table->timestamps();
         });
     }

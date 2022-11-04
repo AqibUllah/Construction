@@ -21,6 +21,10 @@ Route::get('/', function () {
     return view('home');
 });
 
+Route::get('/v', function () {
+    return view('vendor.VendorServices');
+});
+
 Route::get('/contact', function () {
     return view('contact');
 });
@@ -30,8 +34,17 @@ Auth::routes();
 Route::resource('service',ServiceController::class);
 Route::resource('vendors',VendorController::class);
 
+Route::group(['middleware' => ['role:vendor']], function () {
+    Route::prefix('vendor')->group(function() {
+        Route::controller(VendorController::class)->group(function() {
+            Route::get('/dashboard','index')->name('vendorDashboard');
+            Route::get('/services','services')->name('vendorServices');
+        });
+    });
+});
+
 Route::group(['middleware' => ['role:admin']], function () {
-    Route::prefix('admin')->group(function() { 
+    Route::prefix('admin')->group(function() {
         Route::controller(AdminController::class)->group(function() {
             Route::get('/dashboard','index')->name('home');
         });
@@ -39,9 +52,5 @@ Route::group(['middleware' => ['role:admin']], function () {
 });
 
 
-Route::group(['middleware' => ['role:vendor']], function () {
-    Route::controller(VendorController::class)->group(function() {
-        Route::get('/dashboard','index')->name('vendor_home');
-    });
-});
+
 

@@ -3,10 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\vendor;
+use App\Repositories\Interfaces\IServices;
 use Illuminate\Http\Request;
 
 class VendorController extends Controller
 {
+    protected IServices $service;
+
+    public function __construct(IServices $service)
+    {
+        $this->service = $service;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -82,4 +89,11 @@ class VendorController extends Controller
     {
         //
     }
+
+    public function services()
+    {
+        $services = $this->service->getAllServices();
+        return view('vendor.VendorServices',compact('services'));
+    }
+
 }

@@ -41,39 +41,45 @@
   <!-- Template styles-->
   <link rel="stylesheet" href="/assets/css/style.css">
   @yield('styles')
+    <style>
+        .left-inner-addon {
+            position: relative;
+        }
+        .left-inner-addon input {
+            padding-left: 22px;
+        }
+        .left-inner-addon span {
+            position: absolute;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+
+        .right-inner-addon {
+            position: relative;
+        }
+        .right-inner-addon input {
+            padding-right: 30px;
+        }
+        .right-inner-addon span {
+            position: absolute;
+            right: 0px;
+            padding: 7px 12px;
+            pointer-events: none;
+        }
+    </style>
 </head>
 
 <body>
   <div class="body-inner">
 
-
+      <x-header />
     <main>
-      <x-banner title="Admin Dashboard" />
+      <x-banner title="{{ \Auth::user()->hasRole('admin') ? 'Admin Dashboard' : 'Vendor Dashboard' }}" />
       <section id="main-container" class="main-container">
         <div class="container-fluid">
           <div class="row">
             <div class="col-xl-3 col-lg-4">
-              <div class="sidebar ">
-                <div class="widget">
-                  <h3 class="widget-title">Admin Panel</h3>
-                  <ul class="nav service-menu">
-                    <li class="active"><a href="service-single.html">Dashboard</a></li>
-                    <li><a href="#">Services</a></li>
-                    @if(\Auth::user()->hasRole('admin'))
-                      <li><a href="#">Clients</a></li>
-                    @else
-
-                    @endif
-                    <li><a href="#">Settings</a></li>
-                    <li>
-                      <form id="logout-form" action="/logout" method="post">
-                        @csrf
-                        <a onClick="logout()">Log Out</a>
-                      </form>
-                    </li>
-                  </ul>
-                </div><!-- Widget end -->
-              </div><!-- Sidebar end -->
+                <x-vendor-sidebar />
             </div><!-- Sidebar Col end -->
 
             <div class="col-xl-8 col-lg-8">
