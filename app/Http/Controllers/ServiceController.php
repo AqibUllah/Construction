@@ -2,19 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\serviceRequest;
 use App\Models\Service;
 use App\Models\ServiceAttachment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\Repositories\Interfaces\IServices;
+use App\Repositories\Interfaces\ICategory;
+
 
 class ServiceController extends Controller
 {
     protected IServices $service;
+    protected ICategory $category;
 
-    public function __construct(IServices $service)
+
+    public function __construct(IServices $service, ICategory $category)
     {
         $this->service = $service;
+        $this->category = $category;
+
     }
     /**
      * Display a listing of the resource.
@@ -40,13 +47,13 @@ class ServiceController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\serviceRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(serviceRequest $request)
     {
+        $validated = $request->validated();
         $service = $this->service->addService($request->except('files'));
-//        return dd($service);
         if(count($request['files']) > 0)
         {
             if($request->hasFile('files'))
@@ -61,8 +68,7 @@ class ServiceController extends Controller
             }
 
         }
-
-        return redirect()->back();
+        return redirect()->back()->with('created',$service->title.' Service has been created successfully');
     }
 
     public function  uplaodFile($file)
@@ -99,7 +105,8 @@ class ServiceController extends Controller
      */
     public function edit(Service $service)
     {
-        return view('vendor.VendorEditService',compact('service'));
+        $categories = $this->category->getAllCategories();
+        return view('vendor.VendorEditService',compact('service','categories'));
     }
 
     /**
@@ -125,7 +132,7 @@ class ServiceController extends Controller
             }
         }
 
-        return redirect()->route('vendorServices');
+        return redirect()->route('vendorServices')->with('updated','Service has been updated successfully');
     }
 
     /**

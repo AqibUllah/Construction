@@ -19,6 +19,7 @@ class OurServices implements IServices {
             'user_id' => auth()->user()->id,
             'title' => $payload['title'],
             'description' => $payload['description'],
+            'category' => $payload['category'],
             'price' => $payload['price'],
             'IsAvailable' => 1,
             'IsDeleted' => 0,

@@ -4,15 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\vendor;
 use App\Repositories\Interfaces\IServices;
+use App\Repositories\Interfaces\ICategory;
+
 use Illuminate\Http\Request;
 
 class VendorController extends Controller
 {
     protected IServices $service;
+    protected ICategory $category;
 
-    public function __construct(IServices $service)
+    public function __construct(IServices $service, ICategory $category)
     {
         $this->service = $service;
+        $this->category = $category;
+
     }
     /**
      * Display a listing of the resource.
@@ -93,7 +98,8 @@ class VendorController extends Controller
     public function services()
     {
         $services = $this->service->getAllServices();
-        return view('vendor.VendorServices',compact('services'));
+        $categories = $this->category->getAllCategories();
+        return view('vendor.VendorServices',compact('services','categories'));
     }
 
 }

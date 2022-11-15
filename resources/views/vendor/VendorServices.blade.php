@@ -6,7 +6,6 @@
 @section('content')
     <div class="row mb-1">
         <div class="col-md-12">
-            <x-categories />
             <div class="tabs">
 
                 <input type="radio" id="tab1" name="tab-control" checked>
@@ -47,10 +46,19 @@
                 <div class="slider">
                     <div class="indicator"></div>
                 </div>
+{{--                <div class="float-right">--}}
 
+{{--                </div>--}}
                 <div class="content">
                     <section>
-                        <h2>all</h2>
+                        @if(session('updated'))
+                            <x-alert type="success" title="updated" mssg="{{ session('updated') }}" />
+                        @endif
+                        @if(session('created'))
+                            <x-alert type="success" title="created" mssg="{{ session('created') }}" />
+                        @endif
+                        <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#addModal">Add Service
+                        </button>
                         <table id="example-1" class="table table-striped table-hover w-100">
                             <thead>
                                 <tr>
@@ -61,10 +69,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            <div class="float-right">
-                                <button class="btn btn-success" data-toggle="modal" data-target="#addModal">Add Service
-                                </button>
-                            </div>
                                 @if(count($services) > 0)
                                     @foreach($services as $key => $service)
                                         <tr>
@@ -136,6 +140,15 @@
                             <input type="text" name="description" id="description" class="form-control">
                         </div>
                         <div class="form-group">
+                            <label for="category">Category</label>
+                            <select name="category" id="category" class="form-control">
+                                <option disabled selected>Select Category</option>
+                                @foreach($categories as $key => $category)
+                                    <option value="{{ $category->id }}">{{ $category->category }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="title">Price / Day <span class="text-danger">* Note enter price base on per day</span></label>
                             <div class="left-inner-addon">
                                 <span>$</span>
@@ -143,7 +156,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="file">Service Image</label>
+                            <label for="files">Service Image</label>
                             <input type="file" multiple name="files[]" id="files[]" class="form-control">
                         </div>
                     </div>
@@ -155,4 +168,8 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+
 @endsection

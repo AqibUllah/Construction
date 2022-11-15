@@ -40,6 +40,7 @@
   <link rel="stylesheet" href="/assets/plugins/colorbox/colorbox.css">
   <!-- Template styles-->
   <link rel="stylesheet" href="/assets/css/style.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/toastify.css">
   @yield('styles')
     <style>
         .left-inner-addon {
@@ -79,7 +80,12 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-xl-3 col-lg-4">
-                <x-vendor-sidebar />
+                @if(\Auth::user()->hasRole('admin'))
+                    <x-admin-sidebar />
+                @else
+                    <x-vendor-sidebar />
+                @endif
+{{--                <x-vendor-sidebar />--}}
             </div><!-- Sidebar Col end -->
 
             <div class="col-xl-8 col-lg-8">
@@ -116,12 +122,37 @@
 
     <!-- Template custom -->
     <script src="/assets/js/script.js"></script>
+    <script type="text/javascript" src="/assets/js/toastify.js"></script>
 
-    <script>
+      <script>
       function logout() {
         document.getElementById("logout-form").submit();
       }
+
+      function taostr(mssg,colorCode)
+      {
+          var bgColors = [
+                "red",
+                "green",
+                "blue",
+                "warning",
+                "linear-gradient(to right, #00b09b, #96c93d)",
+                "linear-gradient(to right, #ff5f6d, #ffc371)",
+              ];
+          Toastify({
+              text: mssg,
+              duration: 4000,
+              close: true,
+              position : 'right',
+              gravity : 'bottom',
+              style: {
+                  background: bgColors[colorCode],
+              }
+          }).showToast();
+      }
     </script>
+
+      @yield('scripts')
 
   </div><!-- Body inner end -->
 

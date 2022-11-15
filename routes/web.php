@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\VendorController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -45,8 +46,9 @@ Route::group(['middleware' => ['role:vendor']], function () {
 
 Route::group(['middleware' => ['role:admin']], function () {
     Route::prefix('admin')->group(function() {
+        Route::resource('categories',CategoryController::class);
         Route::controller(AdminController::class)->group(function() {
-            Route::get('/dashboard','index')->name('home');
+            Route::get('/dashboard','index')->name('adminDashboard');
         });
     });
 });

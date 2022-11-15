@@ -14,6 +14,7 @@ class Service extends Model
         'title',
         'price',
         'description',
+        'category',
         'IsAvailable',
         'IsDeleted',
     ];
@@ -21,5 +22,15 @@ class Service extends Model
     public function files()
     {
         return $this->hasMany(ServiceAttachment::class);
+    }
+
+    public function RelatedCategory()
+    {
+        return $this->hasOne(Category::class,'id','category');
+    }
+
+    public function user()
+    {
+        return $this->hasOne(User::class,'id','user_id');
     }
 }

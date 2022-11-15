@@ -21,6 +21,15 @@
                         </textarea>
                     </div>
                     <div class="form-group">
+                        <label for="category">Category</label>
+                        <select name="category" id="category" class="form-control">
+                            <option disabled>Select Category</option>
+                            @foreach($categories as $key => $category)
+                                <option value="{{ $category->id }}" {{ $category->id == $service->category ? 'selected' : '' }}>{{ $category->category }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <div class="row">
                             <div class="col-md-6 col-sm-12 col-lg-6">
                                 <label for="title">Price / Day <span class="text-danger">* Note enter price base on per day</span></label>
@@ -31,7 +40,7 @@
                             </div>
                             <div class="col-md-6 col-sm-12 col-lg-6">
                                 <label for="title">Choose File</label>
-                                <input type="file" name="files[]" id="files" value="{{ $service->file }}" class="form-control">
+                                <input type="file" name="files[]" multiple id="files" value="{{ $service->file }}" class="form-control">
                             </div>
                         </div>
                     </div>
