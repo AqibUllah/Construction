@@ -8,7 +8,8 @@
 <section id="main-container" class="main-container pb-2">
   <div class="container">
     <div class="row">
-        @foreach($services as $key => $service)
+        @if(count($services) > 0)
+            @foreach($services as $key => $service)
           <div class="col-lg-4 col-md-6 mb-5">
             <div class="ts-service-box">
                 <div class="ts-service-image-wrapper">
@@ -33,10 +34,18 @@
                       <p>{{ $service->description }}.</p>
                       <a class="learn-more d-inline-block" href="{{ route('service.show', $service->id) }}" aria-label="service-details"><i class="fa fa-caret-right"></i> Learn more</a>
                   </div>
+                    <div class="float-right text-success">
+                        <strong>per day ${{ $service->price }}</strong>
+                    </div>
                 </div>
             </div><!-- Service1 end -->
           </div><!-- Col 1 end -->
         @endforeach
+        @else
+            <div class="col-md-12">
+                <h3 class="text-center text-muted">OOPS! No Services Found!</h3>
+            </div>
+        @endif
     </div><!-- Main row end -->
   </div><!-- Conatiner end -->
 </section><!-- Main container end -->

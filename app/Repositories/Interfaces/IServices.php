@@ -7,4 +7,5 @@ use Illuminate\Http\Request;
 interface IServices {
     public function getAllServices();
     public function addService($payload);
+    public function getLatest(int $limit);
 }

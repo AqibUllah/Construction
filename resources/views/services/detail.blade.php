@@ -1,14 +1,10 @@
 @extends('layouts.app')
 @section('title','Services')
-
 @section('content')
-
     <x-banner title="Service"/>
-
     <section id="main-container" class="main-container">
         <div class="container">
             <div class="row">
-
                 <div class="col-xl-3 col-lg-4">
                     <div class="sidebar sidebar-left">
                         <div class="widget">
@@ -47,9 +43,12 @@
 
                 <div class="col-xl-8 col-lg-8">
                     <div class="content-inner-page">
-
-                        <h2 class="column-title mrt-0">{{ $service->RelatedCategory->category  }}</h2>
-
+                        <div class="d-flex justify-content-between">
+                            <h2 class="column-title mrt-0">{{ $service->RelatedCategory->category  }}</h2>
+                            <div class="float-right">
+                                <h4>per day ${{ $service->price }}</h4>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <p>{{ $service->description }}</p>
@@ -67,7 +66,9 @@
                                 </div>
                             @endforeach
                         </div><!-- Page slider end -->
-
+                        <div class="float-right text-success my-1">
+                            <h4>per day ${{ $service->price }}</h4>
+                        </div>
                         <div class="gap-40"></div>
 
                     {{--          <div class="row">--}}
@@ -158,7 +159,6 @@
                     {{--            </div>--}}
                     {{--          </div>--}}
                     <!--2nd row end -->
-
                         <div class="gap-40"></div>
 
                         <div class="call-to-action classic">
@@ -170,7 +170,7 @@
                                 </div><!-- Col end -->
                                 <div class="col-md-4 text-center text-md-right mt-3 mt-md-0">
                                     <div class="call-to-action-btn">
-                                        <a class="btn btn-primary" href="/contact">Get a Quote</a>
+                                        <a class="btn btn-primary" href="/getService/{{ $service->id }}">Get a Quote</a>
                                     </div>
                                 </div><!-- col end -->
                             </div><!-- row end -->

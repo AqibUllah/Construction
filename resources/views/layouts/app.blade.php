@@ -111,8 +111,6 @@
     <main>
       @yield('content')
     </main>
-
-
   <x-footer />
   <!-- initialize jQuery Library -->
   <script src="/assets/plugins/jQuery/jquery.min.js"></script>

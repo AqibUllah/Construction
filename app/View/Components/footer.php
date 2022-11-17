@@ -2,6 +2,8 @@
 
 namespace App\View\Components;
 
+use App\Models\Service;
+use App\Repositories\Interfaces\IServices;
 use Illuminate\View\Component;
 
 class footer extends Component
@@ -13,7 +15,7 @@ class footer extends Component
      */
     public function __construct()
     {
-        //
+
     }
 
     /**
@@ -23,6 +25,7 @@ class footer extends Component
      */
     public function render()
     {
-        return view('components.footer');
+        $latestServices = Service::latest()->take(5)->get();
+        return view('components.footer',compact('latestServices'));
     }
 }

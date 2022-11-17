@@ -49,11 +49,20 @@ class DatabaseSeeder extends Seeder
             'email_verified_at' => now(),
         ]);
 
+        $noman = \App\Models\User::factory()->create([
+            'name' => 'Noman',
+            'email' => 'noman@example.com',
+            'password' => bcrypt('noman@123'),
+            'email_verified_at' => now(),
+        ]);
+
         $adminRole = Role::create(['name' => 'admin']);
         $vendorRole = Role::create(['name' => 'vendor']);
+        $clientRole = Role::create(['name' => 'client']);
         // $permission = Permission::create(['name' => 'edit articles']);
         $admin->assignRole($adminRole);
         $ali->assignRole($vendorRole);
+        $noman->assignRole($clientRole);
 
     }
 }

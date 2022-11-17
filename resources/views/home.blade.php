@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('title','Home')
-
 @section('content')
 <div class="banner-carousel banner-carousel-1 mb-0">
   <div class="banner-carousel-item" style="background-image:url(/assets/images/slider-main/bg1.jpg)">
@@ -151,7 +150,7 @@
                       </button>
                     </h2>
                 </div>
-              
+
                 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#our-values-accordion">
                     <div class="card-body">
                       Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidata

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Repositories\Interfaces\IServices;
 
 class HomeController extends Controller
 {
@@ -11,9 +12,11 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    protected IServices $service;
+    public function __construct(IServices $service)
     {
-        $this->middleware('auth');
+        $this->service = $service;
+//        $this->middleware('auth');
     }
 
     /**
@@ -23,6 +26,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $latestServices = $this->service->getLatest(5);
+        return view('home',compact('latestServices'));
     }
 }

@@ -27,4 +27,9 @@ class OurServices implements IServices {
         ]);
         return $service;
     }
+
+    public function getLatest(int $numbr)
+    {
+        return Service::latest()->take($numbr)->get();
+    }
 }

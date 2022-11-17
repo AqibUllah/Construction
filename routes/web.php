@@ -5,6 +5,7 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\clientController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -18,9 +19,7 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', [\App\Http\Controllers\HomeController::class,'index']);
 
 Route::get('/v', function () {
     return view('vendor.VendorServices');
@@ -41,6 +40,13 @@ Route::group(['middleware' => ['role:vendor']], function () {
             Route::get('/dashboard','index')->name('vendorDashboard');
             Route::get('/services','services')->name('vendorServices');
         });
+    });
+});
+
+Route::group(['middleware' => ['role:client']], function() {
+    Route::resource('client',clientController::class);
+    Route::controller(clientController::class)->group(function() {
+       Route::get('/getService/{service?}','getService');
     });
 });
 
