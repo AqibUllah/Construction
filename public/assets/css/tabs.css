@@ -102,7 +102,7 @@
     animation-timing-function: ease-in-out;
     -webkit-animation-iteration-count: 1;
     animation-iteration-count: 1;
-    line-height: 1.4;
+    line-height: 0.4;
 }
 .tabs .content section h2 {
     color: #428bff;
@@ -124,6 +124,10 @@
 }
 .tabs input[name=tab-control]:nth-of-type(1):checked ~ ul > li:nth-child(1) > label svg {
     fill: #428bff;
+}
+
+.content section{
+    padding: 15px 0 !important;
 }
 @media (max-width: 600px) {
     .tabs input[name=tab-control]:nth-of-type(1):checked ~ ul > li:nth-child(1) > label {
@@ -233,7 +237,7 @@
         display: none;
     }
     .tabs .content {
-        margin-top: 20px;
+        margin-top: 10px;
     }
     .tabs .content section h2 {
         display: block;

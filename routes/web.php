@@ -53,6 +53,7 @@ Route::group(['middleware' => ['role:client']], function() {
 Route::group(['middleware' => ['role:admin']], function () {
     Route::prefix('admin')->group(function() {
         Route::resource('categories',CategoryController::class);
+        Route::resource('stripe',\App\Http\Controllers\StripeController::class);
         Route::controller(AdminController::class)->group(function() {
             Route::get('/dashboard','index')->name('adminDashboard');
         });

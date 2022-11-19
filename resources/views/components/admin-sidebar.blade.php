@@ -7,6 +7,7 @@
                  <a href="/admin/services">Services</a>
             </li>
             <li class="{{ \Request::route()->getName() == 'categories.index' ? 'active' : ''  }}"><a href="/admin/categories">Categories</a></li>
+            <li class="{{ \Request::route()->getName() == ('stripe.index') ? 'active' : ''  }}"><a href="/admin/stripe">Stripe</a></li>
             <li><a href="#">Clients</a></li>
             <li><a href="#">Settings</a></li>
             <li>

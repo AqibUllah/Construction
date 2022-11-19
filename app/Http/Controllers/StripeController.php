@@ -22,7 +22,11 @@ class StripeController extends Controller
         // all prices
         $prices = $this->prices($stripe);
 
-        return view('admin.stripe.billings',compact('products','prices'));
+        // all sessions
+        $checkoutSessions = $this->checkoutSessions($stripe);
+//        return dd($prices);
+
+        return view('admin.stripe.billings',compact('products','prices','checkoutSessions'));
     }
 
     /**
@@ -76,9 +80,22 @@ class StripeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, Request $request)
     {
-        //
+        $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+        $products = $this->products($stripe);
+
+        switch ($request->name)
+        {
+            case 'product' :
+                $product = $this->getProduct($id);
+                return view('admin.stripe.editProduct',compact('product'));
+                break;
+            case 'price' :
+                $price = $this->getPrice($id);
+//                return dd($price);
+                return view('admin.stripe.editPrice',compact('products','price'));
+        }
     }
 
     /**
@@ -90,30 +107,93 @@ class StripeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+        switch ($request->from)
+        {
+            case 'product' :
+                    try {
+                        $product = $stripe->products->update($id,[
+                            'name' => $request['name'],
+                            'description' => $request['description']
+                        ]);
+                        return redirect()->route('stripe.index')->with('created','product has been updated on stripe');
+                    }catch (\Exception $e)
+                    {
+                        return redirect()->route('stripe.index')->with('error', $e->getMessage());
+                    }
+                break;
+            case 'price' :
+                try {
+                    $stripe->prices->update($id,[
+//                        'currency_options' => [
+//                            'currency' => $request['currency'],
+//                            'unit_amount' =>  (double)$request['amount'],
+//                        ],
+                        'recurring' => ['interval' => $request['package']],
+//                        'product' => $request['product_id'],
+                    ]);
+
+                    return redirect()->route('stripe.index')->with('updated','Price Updated for Product '.$request['product_id'].' on stripe');
+                }catch (\Exception $e)
+                {
+                    return redirect()->route('stripe.index')->with('error', $e->getMessage());
+                }
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+        switch ($request->from)
+        {
+            case 'product' :
+                try {
+                    $stripe->products->delete($id);
+                    return redirect()->route('stripe.index')->with('deleted','product has been deleted on stripe');
+                }catch (\Exception $e)
+                {
+                    return redirect()->route('stripe.index')->with('error', $e->getMessage());
+                }
+                break;
+            case 'price' :
+                try {
+                    $stripe->prices->delete($id);
+                    return redirect()->route('stripe.index')->with('deleted','price has been deleted on stripe');
+                }catch (\Exception $e)
+                {
+                    return redirect()->route('stripe.index')->with('error', $e->getMessage());
+                }
+
+        }
     }
 
     private function createProduct(array $all)
     {
+//        $formatter = new \NumberFormatter('en_US', \NumberFormatter::CURRENCY);
+//        $amount = $all['currency'] == 'usd' ? ($all['amount'] * 222.45) : $all['amount'];
+        $amount = $all['amount'];
         $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
         // product create
         try {
             $product = $stripe->products->create([
                 'name' => $all['name'],
-                'description' => $all['description']
+                'description' => $all['description'],
+                'default_price_data' => [
+                    'currency' => $all['currency'],
+                    'unit_amount' => (int) $amount.'00',
+                    'recurring' => ['interval' => $all['package']]
+                ],
+
             ]);
-            return redirect()->back()->with('created','product has been created on stripe');
+
+            return redirect()->route('stripe.index')->with('created','product has been created on stripe');
         }catch (\Exception $e)
         {
             return $e->getMessage();
@@ -127,7 +207,12 @@ class StripeController extends Controller
     }
     private function prices($stripe)
     {
-        return $stripe->prices->all(['limit' => 5]);
+        return $stripe->prices->all(['limit' => 10]);
+    }
+
+    private function checkoutSessions($stripe)
+    {
+        return $stripe->checkout->sessions->all(['limit' => 10]);
     }
 
     private function createPrice(array $all)
@@ -149,5 +234,17 @@ class StripeController extends Controller
         }
 
 
+    }
+
+    public function getProduct($id)
+    {
+        $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+        return $stripe->products->retrieve($id);
+    }
+
+    private function getPrice($id)
+    {
+        $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+        return $stripe->prices->retrieve($id);
     }
 }

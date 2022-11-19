@@ -44,87 +44,59 @@
                     <div class="content-inner-page">
 
                               <div class="row">
-                                <div class="col-md-6">
-                                  <h3 class="column-title-small">What Makes Us Different</h3>
-                                  <p>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf
-                                    moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
-                                    Consectetur adipiscing elit. Integer adipiscing erat eget risus sollicitudin pellentesque et non erat
-                                    tincidunt nunc posuere.</p>
-                                  <ul class="list-arrow">
-                                    <li>Partnership Strategy tristique eleifend.</li>
-                                    <li>Opporutnity to work with amet elit a.</li>
-                                    <li>Saving Time to Deal with commodo iaculis.</li>
-                                    <li>Leadership skills to manage erat volutpat.</li>
-                                    <li>Cut cost without sacrificing dolore magna.</li>
-                                    <li>Automate your business elis tristique.</li>
-                                  </ul>
-                                </div>
-                                <div class="col-md-6 mt-5 mt-md-0">
-                                  <h3 class="column-title-small">You Should Know</h3>
-                                  <div class="accordion accordion-group accordion-classic" id="construction-accordion">
-                                    <div class="card">
-                                      <div class="card-header p-0 bg-transparent" id="headingOne">
-                                        <h2 class="mb-0">
-                                          <button class="btn btn-block text-left" type="button" data-toggle="collapse"
-                                            data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                            Does the law require head protection on construction sites?
-                                          </button>
-                                        </h2>
-                                      </div>
-                                      <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
-                                        data-parent="#construction-accordion">
-                                        <div class="card-body">
-                                          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
-                                          wolf
-                                          moon officia aute, non cupidata
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="card">
-                                      <div class="card-header p-0 bg-transparent" id="headingTwo">
-                                        <h2 class="mb-0">
-                                          <button class="btn btn-block text-left collapsed" type="button" data-toggle="collapse"
-                                            data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                            What are the first aid requirements for sites?
-                                          </button>
-                                        </h2>
-                                      </div>
-                                      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-                                        data-parent="#construction-accordion">
-                                        <div class="card-body">
-                                          Anemi nim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea com modo
-                                          consequat.
-                                          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                                          pariatur.
-                                          Excepteur sint occaecat cupid henderit in voluptate velit esse cillu oris nisi ut aliquip ex ea
-                                          com
-                                          matat.
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="card">
-                                      <div class="card-header p-0 bg-transparent" id="headingThree">
-                                        <h2 class="mb-0">
-                                          <button class="btn btn-block text-left collapsed" type="button" data-toggle="collapse"
-                                            data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                            What is an appointed person?
-                                          </button>
-                                        </h2>
-                                      </div>
-                                      <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
-                                        data-parent="#construction-accordion">
-                                        <div class="card-body">
-                                          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
-                                          the
-                                          industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type
-                                          and
-                                          scrambled it to make a type specimen book.
-                                        </div>
-                                      </div>
-                                    </div>
+                                  <div class="col-md-12">
+                                      <form action="#" method="post">
+                                          @csrf
+                                          <div class="row">
+                                              <div class="col-md-6">
+                                                  <div class="form-group input-group-sm">
+                                                      <label for="name">Name</label>
+                                                      <input type="text" name="name" id="name" class="form-control" value="{{ \Auth::user()->name }}" disabled>
+                                                  </div>
+                                              </div>
+                                              <div class="col-md-6">
+                                                  <div class="form-group input-group-sm">
+                                                      <label for="email">Email</label>
+                                                      <input type="text" name="email" id="email" class="form-control" value="{{ \Auth::user()->email }}" disabled>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-md-6">
+                                                  <div class="form-group input-group-sm">
+                                                      <label for="phone">Phone</label>
+                                                      <input type="text" name="phone" id="phone" class="form-control" value="{{ \Auth::user()->phone }}">
+                                                  </div>
+                                              </div>
+                                              <div class="col-md-6">
+                                                  <div class="form-group input-group-sm">
+                                                      <label for="address">Address</label>
+                                                      <input type="text" name="address" id="address" class="form-control" value="{{ \Auth::user()->address }}">
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-md-4">
+                                                  <div class="form-group input-group-sm">
+                                                      <label for="country">Country</label>
+                                                      <input type="text" name="country" id="country" class="form-control">
+                                                  </div>
+                                              </div>
+                                              <div class="col-md-4">
+                                                  <div class="form-group input-group-sm">
+                                                      <label for="city">City</label>
+                                                      <input type="text" name="city" id="city" class="form-control">
+                                                  </div>
+                                              </div>
+                                              <div class="col-md-4">
+                                                  <div class="form-group input-group-sm">
+                                                      <label for="postcode">Postal Code</label>
+                                                      <input type="text" name="postcode" id="postcode" class="form-control">
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </form>
                                   </div>
-                                  <!--/ Accordion end -->
-                                </div>
                               </div>
                     <!--2nd row end -->
                         <div class="gap-40"></div>
@@ -138,7 +110,7 @@
                                 </div><!-- Col end -->
                                 <div class="col-md-4 text-center text-md-right mt-3 mt-md-0">
                                     <div class="call-to-action-btn">
-                                        <a class="btn btn-primary" href="/contact">Get</a>
+                                        <a class="btn btn-primary" href="/contact">Go To Checkout Page</a>
                                     </div>
                                 </div><!-- col end -->
                             </div><!-- row end -->
