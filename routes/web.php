@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\clientController;
+use App\Http\Controllers\paymentController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -27,14 +28,14 @@ Route::get('/v', function () {
 
 Route::get('/contact', function () {
     return view('contact');
-});
+})->name('contact');
 
 Auth::routes();
 
 Route::resource('service',ServiceController::class);
 Route::resource('vendors',VendorController::class);
 
-Route::group(['middleware' => ['role:vendor']], function () {
+Route::group(['middleware' => ['role:vendor','paymentStatus']], function () {
     Route::prefix('vendor')->group(function() {
         Route::controller(VendorController::class)->group(function() {
             Route::get('/dashboard','index')->name('vendorDashboard');
@@ -60,6 +61,12 @@ Route::group(['middleware' => ['role:admin']], function () {
     });
 });
 
-
+Route::post('checkout',[\App\Http\Controllers\StripeController::class,'createSessionForSubscription'])->name('checkout');
+Route::prefix('payment')->group(function() {
+    Route::controller(paymentController::class)->group(function() {
+        Route::get('success','success');
+        Route::get('cancel','cancel');
+    });
+});
 
 

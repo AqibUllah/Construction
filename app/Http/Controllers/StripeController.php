@@ -15,7 +15,6 @@ class StripeController extends Controller
     public function index()
     {
         $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
-
         // all products
         $products = $this->products($stripe);
 
@@ -44,6 +43,12 @@ class StripeController extends Controller
             case 'price' :
                 $products = $this->products($stripe);
                 return view('admin.stripe.createPrice',compact('products'));
+            break;
+            case 'session' :
+                $prices = $this->prices($stripe);
+//                return dd($prices);
+                return view('admin.stripe.createCheckoutSession',compact('prices'));
+
         }
     }
 
@@ -60,6 +65,8 @@ class StripeController extends Controller
             case 'product' : return $this->createProduct($request->all());
             break;
             case 'price' : return $this->createPrice($request->all());
+            break;
+            case 'session' : return $this->createSession($request->all());
         }
     }
 
@@ -203,16 +210,31 @@ class StripeController extends Controller
 
     private function products($stripe)
     {
-        return $stripe->products->all(['limit' => 5]);
+        try {
+            return $stripe->products->all(['limit' => 5]);
+        }catch(\Exception $e)
+        {
+            return [];
+        }
     }
     private function prices($stripe)
     {
-        return $stripe->prices->all(['limit' => 10]);
+        try {
+            return $stripe->prices->all(['limit' => 10]);
+        }catch(\Exception $e)
+        {
+            return [];
+        }
     }
 
     private function checkoutSessions($stripe)
     {
-        return $stripe->checkout->sessions->all(['limit' => 10]);
+        try {
+            return $stripe->checkout->sessions->all(['limit' => 10]);
+        }catch(\Exception $e)
+        {
+            return [];
+        }
     }
 
     private function createPrice(array $all)
@@ -246,5 +268,29 @@ class StripeController extends Controller
     {
         $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
         return $stripe->prices->retrieve($id);
+    }
+
+    // checkout session create
+    private function createSession(array $request)
+    {
+        $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+        try {
+            $stripe->checkout->sessions->create([
+                'success_url' =>  $request['success_url'],
+                'cancel_url' => $request['cancel_url'],
+                'mode' => $request['mode'],
+                'line_items' => [
+                    [
+                        'price' => $request['price'],
+                        'quantity' => 1
+                    ]
+                ]
+            ]);
+
+            return redirect()->route('stripe.index')->with('created','checkout session Created on stripe');
+        }catch (\Exception $e)
+        {
+            return redirect()->back()->with('error',$e->getMessage());
+        }
     }
 }

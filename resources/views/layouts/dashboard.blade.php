@@ -105,7 +105,8 @@
     <!-- initialize jQuery Library -->
     <script src="/assets/plugins/jQuery/jquery.min.js"></script>
     <!-- Bootstrap jQuery -->
-    <script src="/assets/plugins/bootstrap/bootstrap.min.js" defer></script>
+      <script src="/assets/js/popper.min.js"></script>
+      <script src="/assets/plugins/bootstrap/bootstrap.min.js" defer></script>
     <!-- Slick Carousel -->
     <script src="/assets/plugins/slick/slick.min.js"></script>
     <script src="/assets/plugins/slick/slick-animation.min.js"></script>

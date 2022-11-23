@@ -7,6 +7,7 @@ use App\Repositories\Interfaces\IServices;
 use App\Repositories\Interfaces\ICategory;
 
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class VendorController extends Controller
 {
@@ -17,6 +18,7 @@ class VendorController extends Controller
     {
         $this->service = $service;
         $this->category = $category;
+
 
     }
     /**
@@ -36,7 +38,7 @@ class VendorController extends Controller
      */
     public function create()
     {
-        return view('VendorCreate');
+        return view('vendor.VendorCreate');
     }
 
     /**

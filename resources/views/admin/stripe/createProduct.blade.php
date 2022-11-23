@@ -10,13 +10,13 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="name">Name</label>
-                            <input type="text" name="name" id="name" class="form-control form-control-sm" placeholder="Product Name">
+                            <input type="text" required name="name" id="name" class="form-control form-control-sm" placeholder="Product Name">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="description">Description</label>
-                            <input type="text" name="description" id="description" class="form-control form-control-sm" placeholder="Product Description">
+                            <input type="text" required  name="description" id="description" class="form-control form-control-sm" placeholder="Product Description">
                         </div>
                     </div>
                 </div>
@@ -26,13 +26,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="amount">Amount</label>
-                                <input type="text" name="amount" id="amount" class="form-control form-control-sm" placeholder="Unit Amount">
+                                <input type="text" required name="amount" id="amount" class="form-control form-control-sm" placeholder="Unit Amount">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="currency">Currency</label>
-                                <select name="currency" id="currency" class="form-control">
+                                <select required name="currency" id="currency" class="form-control">
                                     <option value="usd">usd</option>
                                     <option value="pkr">pkr</option>
                                 </select>
@@ -45,15 +45,15 @@
                     <br>
                     <div class="form-group justify-content-around d-flex">
                         <div class="form-check">
-                            <input type="radio" name="package" id="daily" class="form-check-input" value="day">
+                            <input type="radio" required name="package" id="daily" class="form-check-input" value="day">
                             <label for="daily" class="form-check-label">Daily</label>
                         </div>
                         <div class="form-check">
-                            <input type="radio" name="package" id="monthly" class="form-check-input" value="month">
+                            <input type="radio" required name="package" id="monthly" class="form-check-input" value="month">
                             <label for="monthly"  class="form-check-label">Monthly</label>
                         </div>
                         <div class="form-check">
-                            <input type="radio" name="package" id="yearly" class="form-check-input" value="year">
+                            <input type="radio" required name="package" id="yearly" class="form-check-input" value="year">
                             <label for="yearly"  class="form-check-label">Yearly</label>
                         </div>
                     </div>

@@ -74,4 +74,27 @@ class RegisterController extends Controller
         $user->assignRole($data['role']);
         return $user;
     }
+
+    // checkout session create
+    public function createSessionForSubscription($user)
+    {
+        $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+        try {
+            $session = $stripe->checkout->sessions->create([
+                'success_url' =>  'http://localhost:8000/payment/success?sessionId={CHECKOUT_SESSION_ID}',
+                'cancel_url' => 'http://localhost:8000/payment/cancel',
+                'mode' => 'subscription',
+                'line_items' => [
+                    [
+                        'price' => 'price_1M6xlJCdDYiPm1gGp1wygGoi',
+                        'quantity' => 1
+                    ]
+                ]
+            ]);
+            return $this->redirectTo = $session->url;
+        }catch (\Exception $e)
+        {
+            return $e->getMessage();
+        }
+    }
 }

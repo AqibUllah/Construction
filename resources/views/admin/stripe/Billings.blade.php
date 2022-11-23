@@ -2,6 +2,13 @@
 @section('content-title','Billings')
 @section('styles')
     <link rel="stylesheet" href="/assets/css/tabs.css">
+    <style>
+        .overflowTxt{
+            overflow-x: hidden; /* Hide horizontal scrollbar */
+            overflow-y: scroll; /* Add vertical scrollbar */
+            max-width: 200px;
+        }
+    </style>
 @endsection
 @section('content')
     <div class="row">
@@ -91,7 +98,11 @@
                                     </tr>
                                 @endforeach
                             @else
-                                <h3 class="text-muted">No Products Found!</h3>
+                                <tr>
+                                    <td colspan="5" class="text-center">
+                                        <span class="text-muted">No Products Found!</span>
+                                    </td>
+                                </tr>
                             @endif
                             </tbody>
                         </table>
@@ -112,36 +123,40 @@
                             </tr>
                             </thead>
                             <tbody>
-                        @if(count($prices) > 0)
-                            @foreach($prices as $key => $price)
-                                <tr>
-                                    <td>{{ $key+1  }}</td>
-                                    <td>{{ $price->currency  }}</td>
-                                    @php
-                                        $formatter = new \NumberFormatter('en_US', \NumberFormatter::CURRENCY);
-                                    @endphp
-                                    <td>{{ $price->recurring ? $price->recurring['interval'] : '' }}</td>
-                                    <td>{{ $formatter->formatCurrency($price->unit_amount, $price->currency)  }}</td>
-{{--                                    <td class="d-flex justify-content-around">--}}
-{{--                                        <a class="text-primary" href="/admin/stripe/{{ $price->id }}/edit?name=price">--}}
-{{--                                            <i class="fas fa-pencil-alt"></i>--}}
-{{--                                        </a>--}}
-{{--                                        <form id="deleteForm" action="{{ route('stripe.destroy',$price->id) }}" method="post">--}}
-{{--                                            @csrf--}}
-{{--                                            @method('delete')--}}
-{{--                                            <input type="hidden" name="from" value="price">--}}
-{{--                                            <a onclick="submitDeleteForm()" class="text-danger">--}}
-{{--                                                <i class="fas fa-trash-alt"></i>--}}
-{{--                                            </a>--}}
-{{--                                        </form>--}}
-{{--                                    </td>--}}
-                                </tr>
-                            @endforeach
+                                @if(count($prices) > 0)
+                                    @foreach($prices as $key => $price)
+                                        <tr>
+                                        <td>{{ $key+1  }}</td>
+                                        <td>{{ $price->currency  }}</td>
+                                        @php
+                                            $formatter = new \NumberFormatter('en_US', \NumberFormatter::CURRENCY);
+                                        @endphp
+                                        <td>{{ $price->recurring ? $price->recurring['interval'] : '' }}</td>
+                                        <td>{{ $formatter->formatCurrency($price->unit_amount/100, $price->currency)  }}</td>
+    {{--                                    <td class="d-flex justify-content-around">--}}
+    {{--                                        <a class="text-primary" href="/admin/stripe/{{ $price->id }}/edit?name=price">--}}
+    {{--                                            <i class="fas fa-pencil-alt"></i>--}}
+    {{--                                        </a>--}}
+    {{--                                        <form id="deleteForm" action="{{ route('stripe.destroy',$price->id) }}" method="post">--}}
+    {{--                                            @csrf--}}
+    {{--                                            @method('delete')--}}
+    {{--                                            <input type="hidden" name="from" value="price">--}}
+    {{--                                            <a onclick="submitDeleteForm()" class="text-danger">--}}
+    {{--                                                <i class="fas fa-trash-alt"></i>--}}
+    {{--                                            </a>--}}
+    {{--                                        </form>--}}
+    {{--                                    </td>--}}
+                                    </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td colspan="4" class="text-center">
+                                            <span class="text-muted">No Prices Found!</span>
+                                        </td>
+                                    </tr>
+                                @endif
                             </tbody>
                         </table>
-                        @else
-                            <h3 class="text-muted">No Data Found!</h3>
-                        @endif
                     </section>
                     <section>
                         <a type="button" class="btn btn-success float-right btn-sm mb-1" href="{{ route('stripe.create',['name' => 'session']) }}">
@@ -157,87 +172,34 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @if(count($checkoutSessions) > 0)
-                                @foreach($checkoutSessions as $key => $session)
+                                @if(count($checkoutSessions) > 0)
+                                    @foreach($checkoutSessions as $key => $session)
+                                        <tr>
+                                            <td>{{ $key+1  }}</td>
+                                            <td class="overflowTxt" data-toggle="tooltip" data-placement="top" title="{{ $session->url }}">
+                                                {{ $session->url  }}
+                                            </td>
+                                            <td class="overflow-scroll">{{ $session->success_url }}</td>
+    {{--                                        <td>{{ $session->cancel_url }}</td>--}}
+                                        </tr>
+                                    @endforeach
+                                @else
                                     <tr>
-                                        <td>{{ $key+1  }}</td>
-                                        <td>{{ $session->url  }}</td>
-                                        <td class="overflow-scroll">{{ $session->id }}</td>
-{{--                                        <td>{{ $session->cancel_url }}</td>--}}
+                                        <td colspan="3" class="text-center">
+                                            <span class="text-muted">No Sessions Found!</span>
+                                        </td>
                                     </tr>
-                                @endforeach
+                                @endif
                             </tbody>
                         </table>
-                        @else
-                            <h3 class="text-muted">No sessions Found!</h3>
-                        @endif
+                        <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
+                            Tooltip on top
+                        </button>
                     </section>
                 </div>
             </div>
         </div><!-- col end -->
     </div><!-- 1st row end-->
-    <div class="gap-40"></div>
-    <!-- basic modal -->
-    <div class="modal fade" id="categoryModal" tabindex="-1" role="dialog" aria-labelledby="categoryModal" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">Adding Service</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form action="{{ route('categories.store') }}" method="post">
-                    @csrf
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="category">Category</label>
-                            <input type="text" name="category" id="category" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="description">Description</label>
-                            <input type="text" name="description" id="description" class="form-control">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Create</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModal" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">Edit Category</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form action="/admin/categories/update" method="post">
-                    @method('put')
-                    @csrf
-                    <input type="hidden" name="category_id" id="category_id">
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="category">Category</label>
-                            <input type="text" name="category" id="category" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="description">Description</label>
-                            <input type="text" name="description" id="description" class="form-control">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        <button type="submit" id="submit" class="btn btn-primary">Update</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 @endsection
 @section('scripts')
     <script>
@@ -245,5 +207,6 @@
         {
             document.getElementById("deleteForm").submit();
         }
+
     </script>
 @endsection
