@@ -35,7 +35,7 @@ Auth::routes();
 Route::resource('service',ServiceController::class);
 Route::resource('vendors',VendorController::class);
 
-Route::group(['middleware' => ['role:vendor','paymentStatus']], function () {
+Route::group(['middleware' => ['auth','role:vendor','paymentStatus']], function () {
     Route::prefix('vendor')->group(function() {
         Route::controller(VendorController::class)->group(function() {
             Route::get('/dashboard','index')->name('vendorDashboard');
@@ -51,10 +51,11 @@ Route::group(['middleware' => ['role:client']], function() {
     });
 });
 
-Route::group(['middleware' => ['role:admin']], function () {
+Route::group(['middleware' => ['auth','role:admin']], function () {
     Route::prefix('admin')->group(function() {
         Route::resource('categories',CategoryController::class);
         Route::resource('stripe',\App\Http\Controllers\StripeController::class);
+        Route::resource('vendors',VendorController::class);
         Route::controller(AdminController::class)->group(function() {
             Route::get('/dashboard','index')->name('adminDashboard');
         });
