@@ -36,11 +36,12 @@
                                 <td>{{ $category->category  }}</td>
                                 <td>{{ $category->description }}</td>
                                 <td class="justify-content-around d-flex text-center">
-                                    <a href=""
-                                        id="editCategory"
-                                        data-id="{{ $category->id }}">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
+{{--                                    <a href=""--}}
+{{--                                        id="editCategory"--}}
+{{--                                        data-id="{{ $category->id }}">--}}
+{{--                                        <i class="fas fa-edit"></i>--}}
+{{--                                    </a>--}}
+                                    <button id="editCategory">edit</button>
                                     <form action="{{ route('categories.destroy',$category)  }}" method="post">
                                         @csrf
                                         @method('delete')
@@ -108,15 +109,15 @@
                 <form action="/admin/categories/update" method="post">
                     @method('put')
                     @csrf
-                    <input type="hidden" name="category_id" id="category_id">
                     <div class="modal-body">
+                        <input type="hidden" name="edit_id" id="edit_id">
                         <div class="form-group">
                             <label for="category">Category</label>
-                            <input type="text" name="category" id="category" class="form-control">
+                            <input type="text" name="category" id="edit_category" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="description">Description</label>
-                            <input type="text" name="description" id="description" class="form-control">
+                            <input type="text" name="description" id="edit_description" class="form-control">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -139,22 +140,16 @@
             });
         });
 
-        $('body').on('click', '#editCategory', function (event) {
-
-            event.preventDefault();
-            var id = $(this).data('id');
-            console.log(id)
-            $.get('categories/' + id + '/edit', function (data) {
-                console.warn(data.data.category);
-                $('#submit').val("Update Category");
-                $('#category_id').val(data.data.id);
-                $('#category').val(data.data.category);
-                $('#description').val(data.data.description);
-                $('#description').value = 'ddd';
-                $('#editModal').modal('show');
-                // data-toggle="modal"
-                // data-target="#editModal"
-            })
+        $('#editCategory').on('click', function (event) {
+            $('#editModal').modal('show');
+            $tr = $(this).closest('tr');
+            var data = $tr.children('td').map(function() {
+                return $(this).text();
+            }).get();
+            $('#edit_id').val(data[0]);
+            $('#edit_category').val(data[1]);
+            $('#edit_description').val(data[2]);
         });
+
     </script>
 @endsection

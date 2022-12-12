@@ -33,7 +33,7 @@ Route::get('/contact', function () {
 Auth::routes();
 
 Route::resource('service',ServiceController::class);
-Route::resource('vendors',VendorController::class);
+//Route::resource('vendors',VendorController::class);
 
 Route::group(['middleware' => ['auth','role:vendor','paymentStatus']], function () {
     Route::prefix('vendor')->group(function() {
@@ -55,7 +55,8 @@ Route::group(['middleware' => ['auth','role:admin']], function () {
     Route::prefix('admin')->group(function() {
         Route::resource('categories',CategoryController::class);
         Route::resource('stripe',\App\Http\Controllers\StripeController::class);
-        Route::resource('vendors',VendorController::class);
+        Route::resource('vendors',\App\Http\Controllers\VendorController::class);
+        Route::resource('clients',\App\Http\Controllers\ClientController::class);
         Route::controller(AdminController::class)->group(function() {
             Route::get('/dashboard','index')->name('adminDashboard');
         });

@@ -1,5 +1,5 @@
 @extends('layouts.dashboard')
-@section('content-title','Vendors')
+@section('content-title','Clients')
 @section('styles')
     <link rel="stylesheet" href="/assets/css/tabs.css">
 @endsection
@@ -19,8 +19,8 @@
                 @if(session('error'))
                     <x-alert type="danger" title="Error!" mssg="{{ session('error') }}" />
                 @endif
-                @if(\Route::currentRouteName() == 'vendors.index' )
-                    <a href="{{ route('vendors.create') }}" type="button" class="btn btn-success float-right rounded-circle m-1">
+                @if(\Route::currentRouteName() == 'clients.index' )
+                    <a href="{{ route('clients.create') }}" type="button" class="btn btn-success float-right rounded-circle m-1">
                         <i class="fas fa-plus"></i>
                     </a>
                     <table id="example-1" class="table table-striped table-hover w-100">
@@ -29,25 +29,27 @@
                         <th>#</th>
                         <th>Name</th>
                         <th>Email</th>
-                        <th>Email Verified</th>
+                        <th>Phone</th>
+                        <th>Address</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @if(count($vendors) > 0)
-                        @foreach($vendors as $key => $vendor)
+                    @if(count($clients) > 0)
+                        @foreach($clients as $key => $client)
                             <tr>
                                 <td>{{ $key+1  }}</td>
-                                <td>{{ $vendor->name  }}</td>
-                                <td>{{ $vendor->email }}</td>
+                                <td>{{ $client->name  }}</td>
+                                <td>{{ $client->email }}</td>
                                 <td>
-                                    <span class="badge {{ $vendor->email_verified_at != null ? 'badge-success' : 'badge-danger' }}">{{ $vendor->email_verified_at != null ? 'Verified' : 'Not Verified' }}</span>
+                                    <span class="badge 'badge-info' }}">{{ $client->phone }}</span>
                                 </td>
+                                <td>{{ $client->address }}</td>
                                 <td class="justify-content-around d-flex text-center">
-                                    <a href="{{ route('vendors.edit', $vendor) }}">
+                                    <a href="{{ route('clients.edit', $client) }}">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <form action="/admin/vendors/{{ $vendor->id }}" id="deleteFormId" method="post">
+                                    <form action="{{ route('clients.destroy', $client->id) }}" id="deleteFormId" method="post">
                                         @method('delete')
                                         @csrf
                                         <a type="button" onclick="document.getElementById('deleteFormId').submit()">
@@ -59,20 +61,20 @@
                             </tr>
                         @endforeach
                     @else
-                        <h3 class="text-muted">No Categories Found!</h3>
+                        <h3 class="text-muted">No Clients Found!</h3>
                     @endif
                     </tbody>
                 </table>
-                @elseif(\Route::currentRouteName() == 'vendors.edit')
+                @elseif(\Route::currentRouteName() == 'clients.edit')
 {{--                        {{ route('vendors.update',$vendor->id) }}--}}
-                        <form action="{{ route('vendors.update', $vendor) }}" method="post" autocomplete="off">
+                        <form action="{{ route('clients.update', $client) }}" method="post" autocomplete="off">
                             @method('PUT')
                             @csrf
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="name">Name</label>
-                                        <input type="text" name="name" value="{{ $vendor->name }}" class="form-control @error('name') 'invalid-feedback' @enderror form-control-sm">
+                                        <input type="text" name="name" value="{{ $client->name }}" class="form-control @error('name') 'invalid-feedback' @enderror form-control-sm">
                                         @error('name')
                                         <div class="invalid-feedback">
                                             <span>{{ $message }}</span>
@@ -83,7 +85,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="email">Email</label>
-                                        <input type="text" name="email" value="{{ $vendor->email }}" class="form-control @error('email') 'invalid-feedback' @enderror form-control-sm">
+                                        <input type="text" name="email" value="{{ $client->email }}" class="form-control @error('email') 'invalid-feedback' @enderror form-control-sm">
                                         @error('email')
                                         <div class="invalid-feedback">
                                             <span>{{ $message }}</span>
@@ -93,13 +95,28 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="name">Select Payment Method</label>
-                                        <select name="payment_status" class="form-control form-control-sm" id="payment_status">
-                                            <option value="with_payment" {{ $vendor->email_verified_at !== null ? 'selected' : '' }}>With Payment</option>
-                                            <option value="without_payment" {{ $vendor->email_verified_at == null ? 'selected' : '' }}>Without Payment</option>
-                                        </select>
+                                        <label for="name">Phone #</label>
+                                        <input type="text" name="phone" value="{{ $client->phone }}" class="form-control @error('phone') 'invalid-feedback' @enderror form-control-sm">
+                                        @error('phone')
+                                        <div class="invalid-feedback">
+                                            <span>{{ $message }}</span>
+                                        </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="name">Address</label>
+                                        <input type="text" name="address" class="form-control @error('address') 'invalid-feedback' @enderror form-control-sm" >
+                                            {{ $client->address }}
+                                        </input>
+                                        @error('address')
+                                        <div class="invalid-feedback">
+                                            <span>{{ $message }}</span>
+                                        </div>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
@@ -107,7 +124,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="password">Password</label>
-                                        <input type="password" name="password" class="form-control @error('email') 'invalid-feedback' @enderror form-control-sm">
+                                        <input type="password" name="password" class="form-control @error('password') 'invalid-feedback' @enderror form-control-sm">
                                         @error('password')
                                         <div class="invalid-feedback">
                                             <span>{{ $message }}</span>
@@ -118,7 +135,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="password_confirmation">Confirm password</label>
-                                        <input type="password" name="password_confirmation" class="form-control @error('email') 'invalid-feedback' @enderror form-control-sm">
+                                        <input type="password" name="password_confirmation" class="form-control @error('password_confirmation') 'invalid-feedback' @enderror form-control-sm">
                                         @error('password_confirmation')
                                         <div class="invalid-feedback">
                                             <span>{{ $message }}</span>
@@ -134,7 +151,7 @@
                             </div>
                         </form>
                 @else
-                    <form action="{{ route('vendors.store') }}" method="post" autocomplete="off">
+                    <form action="{{ route('clients.store') }}" method="post" autocomplete="off">
                         @csrf
                         <div class="row">
                             <div class="col-md-6">
@@ -156,13 +173,26 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Select Payment Method</label>
-                                    <select name="payment_status" class="form-control form-control-sm" id="payment_status">
-                                        <option value="with_payment">With Payment</option>
-                                        <option value="without_payment">Without Payment</option>
-                                    </select>
+                                    <label for="name">Phone #</label>
+                                    <input type="text" name="phone" class="form-control @error('phone') 'invalid-feedback' @enderror form-control-sm">
+                                    @error('phone')
+                                    <div class="invalid-feedback">
+                                        <span>{{ $message }}</span>
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Address</label>
+                                    <input type="text"  rows="4" cols="50" name="address" class="form-control @error('address') 'invalid-feedback' @enderror form-control-sm">
+                                    @error('address')
+                                    <div class="invalid-feedback">
+                                        <span>{{ $message }}</span>
+                                    </div>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -190,102 +220,5 @@
             </div>
         </div><!-- col end -->
     </div><!-- 1st row end-->
-
     <div class="gap-40"></div>
-
-
-
-
-
-    <!-- basic modal -->
-    <div class="modal fade" id="categoryModal" tabindex="-1" role="dialog" aria-labelledby="categoryModal" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">Adding Service</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form action="{{ route('categories.store') }}" method="post">
-                    @csrf
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="category">Category</label>
-                            <input type="text" name="category" id="category" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="description">Description</label>
-                            <input type="text" name="description" id="description" class="form-control">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Create</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModal" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">Edit Category</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form action="/admin/categories/update" method="post">
-                    @method('put')
-                    @csrf
-                    <input type="hidden" name="category_id" id="category_id">
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="category">Category</label>
-                            <input type="text" name="category" id="category" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="description">Description</label>
-                            <input type="text" name="description" id="description" class="form-control">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        <button type="submit" id="submit" class="btn btn-primary">Update</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-@endsection
-@section('scripts')
-    <script>
-
-        $(document).ready(function () {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-        });
-
-        $('body').on('click', '#editCategory', function (event) {
-
-            event.preventDefault();
-            var id = $(this).data('id');
-            console.log(id)
-            $.get('categories/' + id + '/edit', function (data) {
-                console.warn(data.data.category);
-                $('#submit').val("Update Category");
-                $('#category_id').val(data.data.id);
-                $('#category').val(data.data.category);
-                $('#description').val(data.data.description);
-                $('#description').value = 'ddd';
-                $('#editModal').modal('show');
-                // data-toggle="modal"
-                // data-target="#editModal"
-            })
-        });
-    </script>
 @endsection

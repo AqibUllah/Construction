@@ -83,7 +83,8 @@
                       @endguest
 
                       @auth
-                      <a title="Admin Logged In" href="{{ \Auth::user()->hasRole('admin') ? '/admin/dashboard' : '/vendor/dashboard' }}">
+                      <a title="Admin Logged In"
+                         href="{{ \Auth::user()->hasRole('admin') ? '/admin/dashboard' : (\Auth::user()->hasRole('vendor') ? '/vendor/dashboard' : '/client/dashboard') }}">
                           <span class="social-icon"><i class="fas fa-user"></i> {{ auth()->user()->name }}</span>
                       </a>
                       <form action="logout" method="post" class="d-inline">

@@ -7,7 +7,10 @@ use App\Models\vendor;
 use App\Repositories\Interfaces\IServices;
 use App\Repositories\Interfaces\ICategory;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
 
 class VendorController extends Controller
@@ -31,8 +34,9 @@ class VendorController extends Controller
     {
         if(auth()->user()->hasRole('admin'))
         {
-//            $vendors = User::role('vendor')->get();
-            $vendors = User::get();
+            $vendors = user::whereHas('Roles',function($q){
+                $q->where('name','vendor');
+            })->get();
             return view('admin.Vendors',compact('vendors'));
         }
         return view('vendor.VendorDashboard');
@@ -109,25 +113,45 @@ class VendorController extends Controller
      * @param  \App\Models\vendor  $vendor
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, vendor $vendor)
+    public function update(Request $request, User $vendor)
     {
-        try {
-//            try {
-//                $vendor = User::find($id);
-//            }catch (\Exception $e)
-//            {
-//                return back()->with('error',$e->getMessage());
-//            }
+        $this->validate($request, array(
+            'name' => 'required|string|max:255',
+            'email' => [
+                'required','nullable','string','email','max:255',
+                Rule::unique('users')->ignore($vendor->id),
+            ],
+            'password' => 'nullable|string|min:6|confirmed',
+        ));
 
+        try {
             $vendor->name = $request->name;
             $vendor->email = $request->email;
-            $vendor->email_verified_at = $request->email_verified_at;
+            if($request->payment_status == 'with_payment')
+            {
+                $vendor->email_verified_at = Carbon::now();
+            }elseif ($request->payment_status == 'without_payment')
+            {
+                $vendor->email_verified_at = null;
+            }
+            if($request->password != null)
+            {
+               return $this->validate($request, array(
+                    'name' => 'required|string|max:255',
+                    'email' => [
+                        'required','nullable','string','email','max:255',
+                        Rule::unique('users')->ignore($vendor->id),
+                    ],
+                    'password' => 'required|string|min:6|confirmed',
+                ));
+                $vendor->password = bcrypt($request->password);
+            }
             $vendor->save();
             if(auth()->user()->hasRole('vendor'))
             {
                 return back()->with('updated',$vendor->name.' has updated successfully');
             }
-            return view('admin.vendors')->with('updated',$vendor->name.' has updated successfully');
+            return redirect('admin/vendors')->with('updated',$vendor->name.' has updated successfully');
         }catch (\Exception $e)
         {
             return back()->with('error',$e->getMessage());

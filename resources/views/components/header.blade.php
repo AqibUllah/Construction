@@ -9,7 +9,7 @@
                   <img loading="lazy" src="/assets/images/logo.png" alt="Constra">
                 </a>
             </div><!-- logo end -->
-  
+
             <div class="col-lg-9 header-right">
                 <ul class="top-info-box">
                   <li>
@@ -42,7 +42,7 @@
                 </ul><!-- Ul end -->
             </div><!-- header right end -->
           </div><!-- logo area end -->
-  
+
       </div><!-- Row end -->
     </div><!-- Container end -->
   </div>
@@ -55,7 +55,7 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                
+
                 <div id="navbar-collapse" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav mr-auto">
                       <!-- <li class="nav-item dropdown active">
@@ -78,7 +78,7 @@
                             <li><a href="pricing.html">Pricing</a></li>
                           </ul>
                       </li>
-              
+
                       <!-- <li class="nav-item dropdown">
                           <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Projects <i class="fa fa-angle-down"></i></a>
                           <ul class="dropdown-menu" role="menu">
@@ -86,7 +86,7 @@
                             <li><a href="projects-single.html">Projects Single</a></li>
                           </ul>
                       </li> -->
-              
+
                       <!-- <li class="nav-item dropdown">
                           <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Services <i class="fa fa-angle-down"></i></a>
                           <ul class="dropdown-menu" role="menu">
@@ -96,7 +96,7 @@
                       </li> -->
                       <li class="nav-item"><a class="nav-link" href="#">Projects</a></li>
                       <li class="nav-item"><a class="nav-link" href="{{ route('service.index') }}">Services</a></li>
-              
+
                       <!-- <li class="nav-item dropdown">
                           <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Features <i class="fa fa-angle-down"></i></a>
                           <ul class="dropdown-menu" role="menu">
@@ -112,7 +112,7 @@
                             </li>
                           </ul>
                       </li> -->
-              
+
                       <!-- <li class="nav-item dropdown">
                           <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">News <i class="fa fa-angle-down"></i></a>
                           <ul class="dropdown-menu" role="menu">
@@ -121,10 +121,10 @@
                             <li><a href="news-single.html">News Single</a></li>
                           </ul>
                       </li> -->
-              
+
                       <li class="nav-item"><a class="nav-link" href="#">News</a></li>
                       <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
-                      <li class="nav-item"><a class="nav-link" href="{{ route('vendors.create') }}">Join as a Vendor</a></li>
+                      <li class="nav-item"><a class="nav-link" href="/register">Join as a Vendor</a></li>
                     </ul>
                 </div>
               </nav>
