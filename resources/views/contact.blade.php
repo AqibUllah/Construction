@@ -21,39 +21,15 @@
 
     <div class="row">
       <div class="col-md-4">
-        <div class="ts-service-box-bg text-center h-100">
-          <span class="ts-service-icon icon-round">
-            <i class="fas fa-map-marker-alt mr-0"></i>
-          </span>
-          <div class="ts-service-box-content">
-            <h4>Visit Our Office</h4>
-            <p>9051 Constra Incorporate, USA</p>
-          </div>
-        </div>
+        <x-contact-card title="visit out office" subtitle="9051 Constra Incorporate, USA" />
       </div><!-- Col 1 end -->
 
       <div class="col-md-4">
-        <div class="ts-service-box-bg text-center h-100">
-          <span class="ts-service-icon icon-round">
-            <i class="fa fa-envelope mr-0"></i>
-          </span>
-          <div class="ts-service-box-content">
-            <h4>Email Us</h4>
-            <p>Hamzasami103661@gmail.com</p>
-          </div>
-        </div>
+          <x-contact-card icon="envelope mr-0" title="Email Us" subtitle="Hamzasami103661@gmail.com" />
       </div><!-- Col 2 end -->
 
       <div class="col-md-4">
-        <div class="ts-service-box-bg text-center h-100">
-          <span class="ts-service-icon icon-round">
-            <i class="fa fa-phone-square mr-0"></i>
-          </span>
-          <div class="ts-service-box-content">
-            <h4>Call Us</h4>
-            <p>+92 316 5599295</p>
-          </div>
-        </div>
+          <x-contact-card icon="phone-square mr-0" title="call Us" subtitle="+92 316 5599295" />
       </div><!-- Col 3 end -->
 
     </div><!-- 1st row end -->

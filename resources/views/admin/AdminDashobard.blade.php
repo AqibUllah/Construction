@@ -13,24 +13,26 @@
     <div class="row">
         <div class="col-md-12">
 
-            
+
             <div class="row"> <!-- row-start -->
                 <div class="col-lg-6 col-md-6 col-sm-12 mb-1">
-                    <x-dashboard-card title="vendors" value="55" icon="icon-image/fact2.png" />
-                    
+                    <a class="bg-success" href="/admin/vendors">
+                        <x-dashboard-card  title="vendors" :value="$vendors" icon="icon-image/fact2.png" />
+                    </a>
+
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 mb-1">
-                    <x-dashboard-card title="Services" value="15" icon="icon-image/service-icon1.png" />
+                    <a href="/admin/services">
+                        <x-dashboard-card title="Services" :value="$services" icon="icon-image/service-icon1.png" />
+                    </a>
                 </div>
             </div> <!-- row-end -->
-            
-            <div class="row"> <!-- row-start -->
+
+            <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12 mb-1">
-                    <x-dashboard-card title="Projects" value="10" icon="icon-image/service-icon5.png" />
-                    
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-12 mb-1">
-                    <x-dashboard-card title="Clients" value="15" icon="icon-image/seller.png" />
+                    <a href="/admin/clients">
+                        <x-dashboard-card title="Clients" :value="$clients" icon="icon-image/seller.png" />
+                    </a>
                 </div>
             </div> <!-- row-end -->
 

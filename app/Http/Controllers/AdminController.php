@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Service;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class AdminController extends Controller
 {
@@ -16,7 +18,14 @@ class AdminController extends Controller
 
     public function index()
     {
-        return view('admin.AdminDashobard');
+        $vendors = User::whereHas('roles',function($q){
+                        $q->where('name','vendor');
+                    })->count();
+        $clients = User::whereHas('roles',function($q){
+                        $q->where('name','client');
+                    })->count();
+        $services = Service::count();
+        return view('admin.AdminDashobard',compact('vendors','clients','services'));
     }
 
     public function vendors()
@@ -30,33 +39,11 @@ class AdminController extends Controller
         return view('admin.vendors');
     }
 
-    public function vendorEdit($id)
+    public function Edit()
     {
-        $vendor = User::find($id);
-        return view('admin.vendorsManage',compact('vendor'));
+        return view('Settings');
     }
 
-    public function vendorUpdate($id, Request $request)
-    {
-        try {
-            try {
-                $vendor = User::find($id);
-            }catch (\Exception $e)
-            {
-                return back()->with('error',$e->getMessage());
-            }
-
-            $vendor->name = $request->name;
-            $vendor->email = $request->email;
-            $vendor->email_verified_at = $request->email_verified_at;
-            $vendor->save();
-            return view('admin.vendors')->with('updated',$vendor->name.' has updated successfully');
-        }catch (\Exception $e)
-        {
-            return back()->with('error',$e->getMessage());
-        }
-
-    }
 
     public function vendorDelete($id)
     {
@@ -69,4 +56,6 @@ class AdminController extends Controller
             return back()->with('error',$e->getMessage());
         }
     }
+
+
 }

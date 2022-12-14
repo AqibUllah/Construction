@@ -22,6 +22,10 @@ class clientController extends Controller
 
     public function index()
     {
+        if(auth()->user()->hasRole('client'))
+        {
+            return view('client.ClientDashboard');
+        }
         $clients = user::whereHas('Roles',function($q){
             $q->where('name','client');
         })->get();

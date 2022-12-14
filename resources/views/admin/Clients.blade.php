@@ -109,8 +109,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="name">Address</label>
-                                        <input type="text" name="address" class="form-control @error('address') 'invalid-feedback' @enderror form-control-sm" >
-                                            {{ $client->address }}
+                                        <input type="text" name="address" value="{{ $client->address }}" class="form-control @error('address') 'invalid-feedback' @enderror form-control-sm" >
                                         </input>
                                         @error('address')
                                         <div class="invalid-feedback">

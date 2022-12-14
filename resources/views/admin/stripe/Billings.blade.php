@@ -77,21 +77,21 @@
                                 @foreach($products as $key => $product)
                                     <tr>
                                         <td>{{ $key+1  }}</td>
-                                        <td>{{ $product->name  }}</td>
+                                        <td class="overflow-auto">{{ $product->name  }}</td>
                                         <td>{{ $product->description }}</td>
                                         <td class="align-items-center {{ $product->active == true ? 'text-success' : 'text-danger' }}">
-                                           active <i class="fas {{ $product->active == true ? 'fa-check-circle' : 'fa-close' }} fa-sm"></i>
+                                           <i title="{{ $product->active == true ? 'active' : 'disabled' }}" class="fas {{ $product->active == true ? 'fa-check-circle' : 'fa-close' }} fa-sm"></i>
                                         </td>
                                         <td class="d-flex justify-content-around">
                                             <a class="text-primary" href="/admin/stripe/{{ $product->id }}/edit?name=product">
-                                                <i class="fas fa-pencil-alt"></i>
+                                                <i class="fas fa-pencil-alt" title="Edit"></i>
                                             </a>
                                             <form id="deleteForm" action="{{ route('stripe.destroy',$product->id) }}" method="post">
                                                 @csrf
                                                 @method('delete')
                                                 <input type="hidden" name="from" value="product">
                                                 <a onclick="submitDeleteForm()" class="text-danger">
-                                                    <i class="fas fa-trash-alt"></i>
+                                                    <i class="fas fa-trash-alt" title="Delete"></i>
                                                 </a>
                                             </form>
                                         </td>
@@ -192,9 +192,6 @@
                                 @endif
                             </tbody>
                         </table>
-                        <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
-                            Tooltip on top
-                        </button>
                     </section>
                 </div>
             </div>

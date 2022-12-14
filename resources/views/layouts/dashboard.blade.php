@@ -73,22 +73,30 @@
 <body>
   <div class="body-inner">
 
-      <x-header />
+{{--      <x-header />--}}
     <main>
-      <x-banner title="{{ \Auth::user()->hasRole('admin') ? 'Admin Dashboard' : 'Vendor Dashboard' }}" />
+        @php
+        $adminRole = \Auth::user()->hasRole('admin');
+        $vendorRole = \Auth::user()->hasRole('vendor');
+        @endphp
+      <x-banner
+          img="{{ $adminRole == true ? '/assets/images/banner/banner1.jpg' : ( $vendorRole == true ? '/assets/images/banner/banner2.jpg' : '/assets/images/banner/banner3.jpg') }}"
+          title="{{ \Auth::user()->hasRole('admin') ? 'Admin Dashboard' : (\Auth::user()->hasRole('admin') ? 'Vendor Dashboard' : 'Client Dashboard') }}" />
       <section id="main-container" class="main-container">
         <div class="container-fluid">
           <div class="row">
             <div class="col-xl-3 col-lg-4">
                 @if(\Auth::user()->hasRole('admin'))
                     <x-admin-sidebar />
-                @else
+                @elseif(\Auth::user()->hasRole('vendor'))
                     <x-vendor-sidebar />
+                @else
+                    <x-client-sidebar />
                 @endif
 {{--                <x-vendor-sidebar />--}}
             </div><!-- Sidebar Col end -->
 
-            <div class="col-xl-8 col-lg-8">
+            <div class="col-xl-9 col-lg-8">
               <div class="content-inner-page">
                 <h2 class="column-title mrt-0">@yield('content-title')</h2>
                 @yield('content')

@@ -6,7 +6,7 @@
             <li class="{{ \Request::route()->getName() == 'vendorServices' ? 'active' : ''  }}">
                 <a href="/vendor/services">Services</a>
             </li>
-            <li><a href="#">Settings</a></li>
+            <li class="{{ \Request::route()->getName() == ('vendorProfile') ? 'active' : ''  }}"><a href="/vendor/settings">Settings</a></li>
             <li>
                 <form id="logout-form" action="/logout" method="post">
                     @csrf

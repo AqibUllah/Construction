@@ -123,7 +123,7 @@ class StripeController extends Controller
                             'name' => $request['name'],
                             'description' => $request['description']
                         ]);
-                        return redirect()->route('stripe.index')->with('created','product has been updated on stripe');
+                        return redirect()->route('stripe.index')->with('updated','product has been updated on stripe');
                     }catch (\Exception $e)
                     {
                         return redirect()->route('stripe.index')->with('error', $e->getMessage());

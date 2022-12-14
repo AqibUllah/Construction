@@ -41,13 +41,24 @@ Route::group(['middleware' => ['auth','role:vendor','paymentStatus']], function 
             Route::get('/dashboard','index')->name('vendorDashboard');
             Route::get('/services','services')->name('vendorServices');
         });
+        Route::controller(\App\Http\Controllers\SettingsController::class)->group(function() {
+            Route::get('/settings','Edit')->name('vendorProfile');
+            Route::put('/settings','update')->name('vendorProfile');
+        });
     });
 });
 
 Route::group(['middleware' => ['role:client']], function() {
-    Route::resource('client',clientController::class);
-    Route::controller(clientController::class)->group(function() {
-       Route::get('/getService/{service?}','getService');
+    Route::prefix('client')->group(function() {
+        //Route::resource('client',clientController::class);
+        Route::controller(clientController::class)->group(function() {
+            Route::get('/dashboard','index')->name('clientDashboard');
+            Route::get('/getService/{service?}','getService');
+        });
+        Route::controller(\App\Http\Controllers\SettingsController::class)->group(function() {
+            Route::get('/settings','Edit')->name('clientProfile');
+            Route::put('/settings','update')->name('clientProfile');
+        });
     });
 });
 
@@ -59,6 +70,10 @@ Route::group(['middleware' => ['auth','role:admin']], function () {
         Route::resource('clients',\App\Http\Controllers\ClientController::class);
         Route::controller(AdminController::class)->group(function() {
             Route::get('/dashboard','index')->name('adminDashboard');
+        });
+        Route::controller(\App\Http\Controllers\SettingsController::class)->group(function() {
+            Route::get('/settings','Edit')->name('profileEdit');
+            Route::put('/settings','update')->name('profileUpdate');
         });
     });
 });

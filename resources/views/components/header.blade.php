@@ -6,7 +6,7 @@
           <div class="row align-items-center">
             <div class="logo col-lg-3 text-center text-lg-left mb-3 mb-md-5 mb-lg-0">
                 <a class="d-block" href="/">
-                  <img loading="lazy" src="/assets/images/logo.png" alt="Constra">
+                  <img loading="lazy" style="width: 150px !important;height: auto;background-size: cover" height="100%" width="100%" src="/assets/images/logos/logo-300.png" alt="Booking Construction">
                 </a>
             </div><!-- logo end -->
 
@@ -37,7 +37,7 @@
                     </div>
                   </li>
                   <li class="header-get-a-quote">
-                    <a class="btn btn-primary" href="contact.html">Get A Quote</a>
+                    <a class="btn btn-primary" href="/contact">Get A Quote</a>
                   </li>
                 </ul><!-- Ul end -->
             </div><!-- header right end -->
@@ -67,17 +67,17 @@
                       </li> -->
                       <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
 
-                      <li class="nav-item dropdown">
-                          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Company <i class="fa fa-angle-down"></i></a>
-                          <ul class="dropdown-menu" role="menu">
-                            <li><a href="about.html">About Us</a></li>
-                            <li><a href="team.html">Our People</a></li>
-                            <li><a href="testimonials.html">Testimonials</a></li>
-                            <li><a href="faq.html">Faq</a></li>
-                            <li><a href="vendors">Vendors</a></li>
-                            <li><a href="pricing.html">Pricing</a></li>
-                          </ul>
-                      </li>
+{{--                      <li class="nav-item dropdown">--}}
+{{--                          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Company <i class="fa fa-angle-down"></i></a>--}}
+{{--                          <ul class="dropdown-menu" role="menu">--}}
+{{--                            <li><a href="about.html">About Us</a></li>--}}
+{{--                            <li><a href="team.html">Our People</a></li>--}}
+{{--                            <li><a href="testimonials.html">Testimonials</a></li>--}}
+{{--                            <li><a href="faq.html">Faq</a></li>--}}
+{{--                            <li><a href="vendors">Vendors</a></li>--}}
+{{--                            <li><a href="pricing.html">Pricing</a></li>--}}
+{{--                          </ul>--}}
+{{--                      </li>--}}
 
                       <!-- <li class="nav-item dropdown">
                           <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Projects <i class="fa fa-angle-down"></i></a>
@@ -94,7 +94,7 @@
                             <li><a href="service-single.html">Services Single</a></li>
                           </ul>
                       </li> -->
-                      <li class="nav-item"><a class="nav-link" href="#">Projects</a></li>
+{{--                      <li class="nav-item"><a class="nav-link" href="#">Projects</a></li>--}}
                       <li class="nav-item"><a class="nav-link" href="{{ route('service.index') }}">Services</a></li>
 
                       <!-- <li class="nav-item dropdown">
@@ -122,7 +122,7 @@
                           </ul>
                       </li> -->
 
-                      <li class="nav-item"><a class="nav-link" href="#">News</a></li>
+{{--                      <li class="nav-item"><a class="nav-link" href="#">News</a></li>--}}
                       <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
                       <li class="nav-item"><a class="nav-link" href="/register">Join as a Vendor</a></li>
                     </ul>

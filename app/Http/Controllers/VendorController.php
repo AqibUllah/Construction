@@ -118,7 +118,7 @@ class VendorController extends Controller
         $this->validate($request, array(
             'name' => 'required|string|max:255',
             'email' => [
-                'required','nullable','string','email','max:255',
+                'required','string','email','max:255',
                 Rule::unique('users')->ignore($vendor->id),
             ],
             'password' => 'nullable|string|min:6|confirmed',
@@ -136,10 +136,10 @@ class VendorController extends Controller
             }
             if($request->password != null)
             {
-               return $this->validate($request, array(
+               $this->validate($request, array(
                     'name' => 'required|string|max:255',
                     'email' => [
-                        'required','nullable','string','email','max:255',
+                        'required','string','email','max:255',
                         Rule::unique('users')->ignore($vendor->id),
                     ],
                     'password' => 'required|string|min:6|confirmed',
